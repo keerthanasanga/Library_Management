@@ -5,8 +5,11 @@ import org.springframework.web.bind.annotation.*;
 
 import com.library.management.dto.LoginRequest;
 import com.library.management.dto.LoginResponse;
+import com.library.management.entity.Student;
 import com.library.management.service.AdminService;
 import com.library.management.service.StudentService;
+
+import com.library.management.entity.Admin;
 
 @RestController
 @RequestMapping("/api/login")
@@ -20,30 +23,51 @@ public class LoginController {
     private AdminService adminService;
 
     @PostMapping
-    public LoginResponse login(@RequestBody LoginRequest request) {
+public LoginResponse login(@RequestBody LoginRequest request) {
 
-        boolean success = false;
+    if ("student".equalsIgnoreCase(request.getRole())) {
 
-        if ("student".equalsIgnoreCase(request.getRole())) {
-
-            success = studentService.login(
-                    request.getEmail(),
-                    request.getPassword());
-
-        } else if ("admin".equalsIgnoreCase(request.getRole())) {
-
-            success = adminService.login(
-                    request.getEmail(),
-                    request.getPassword());
-
-        }
+        boolean success = studentService.login(
+                request.getEmail(),
+                request.getPassword());
 
         if (success) {
-            return new LoginResponse(true, "Login Successful");
+
+            Student student =
+                    studentService.getStudentByEmail(request.getEmail());
+
+            return new LoginResponse(
+                    true,
+                    "Login Successful",
+                    student.getStudentId(),
+                    student.getName(),
+                    "student"
+            );
         }
 
-        return new LoginResponse(false, "Invalid Email or Password");
+    } else if ("admin".equalsIgnoreCase(request.getRole())) {
+
+        boolean success = adminService.login(
+                request.getEmail(),
+                request.getPassword());
+
+        if (success) {
+
+            Admin admin =
+                    adminService.getAdminByEmail(request.getEmail());
+
+            return new LoginResponse(
+                    true,
+                    "Login Successful",
+                    admin.getAdminId(),
+                    admin.getName(),
+                    "admin"
+            );
+        }
 
     }
 
+    return new LoginResponse(false, "Invalid Email or Password");
+
+}
 }

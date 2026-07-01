@@ -74,4 +74,16 @@ public List<Book> searchBooks(String keyword) {
     return repository.findByIsbnContainingIgnoreCase(keyword);
 }
 
+public long totalBooks() {
+    return repository.count();
+}
+
+public long availableBooks() {
+
+    return repository.findAll()
+            .stream()
+            .filter(book -> book.getAvailableQuantity() > 0)
+            .count();
+}
+
 }

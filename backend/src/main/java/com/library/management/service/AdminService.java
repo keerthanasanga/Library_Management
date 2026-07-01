@@ -24,5 +24,11 @@ public class AdminService {
 
         return false;
     }
+    public Admin getAdminByEmail(String email) {
+
+    return adminRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("Admin not found"));
+
+}
 
 }
