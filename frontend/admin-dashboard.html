@@ -13,6 +13,7 @@
 <h1>Library Management System</h1>
 
 <h2>Admin Dashboard</h2>
+<h2>Welcome, <span id="adminName"></span></h2>
 
 <div>
 
@@ -20,21 +21,49 @@
         Manage Books
     </button>
 
-    <button>
-        Manage Students
-    </button>
+    <button onclick="location.href='students.html'">
 
-    <button>
-        Borrow Records
-    </button>
+View Students
 
-    <button>
-        Reports
-    </button>
+</button>
 
     <button onclick="logout()">
         Logout
     </button>
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+<h3>Total Books</h3>
+<h1 id="totalBooks">0</h1>
+</div>
+
+<div class="card">
+<h3>Available Books</h3>
+<h1 id="availableBooks">0</h1>
+</div>
+
+<div class="card">
+<h3>Borrowed Books</h3>
+<h1 id="borrowedBooks">0</h1>
+</div>
+
+<div class="card">
+<h3>Returned Books</h3>
+<h1 id="returnedBooks">0</h1>
+</div>
+
+<div class="card">
+<h3>Total Students</h3>
+<h1 id="totalStudents">0</h1>
+</div>
+
+<div class="card">
+<h3>Fine Collected</h3>
+<h1 id="totalFine">₹0</h1>
+</div>
 
 </div>
 

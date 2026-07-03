@@ -23,6 +23,9 @@ async function login() {
     const data = await response.json();
 
     if (data.success) {
+        sessionStorage.setItem("userId", data.id);
+sessionStorage.setItem("userName", data.name);
+sessionStorage.setItem("role", data.role);
 
         if (role === "admin") {
 
@@ -41,3 +44,4 @@ async function login() {
     }
 
 }
+

@@ -1,0 +1,216 @@
+/* =========================================================
+   Northline — a calm, minimal professional theme
+   Design idea: soft neutral canvas, one confident accent
+   color, precise spacing and type instead of heavy effects.
+========================================================= */
+
+:root{
+    --canvas:#f5f6f8;
+    --canvas-edge:#e9ebef;
+    --ink:#12131a;
+    --muted:#6b7280;
+    --line:#e2e4ea;
+    --accent:#3454d1;
+    --accent-dark:#28409f;
+    --accent-soft:rgba(52,84,209,.10);
+    --white:#ffffff;
+    --radius-lg:16px;
+    --radius-md:10px;
+    --shadow-card:0 1px 2px rgba(16,24,40,.04), 0 20px 40px -18px rgba(16,24,40,.18);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    margin:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+        linear-gradient(180deg,var(--canvas) 0%,var(--canvas-edge) 100%);
+    font-family:"Segoe UI","Inter",-apple-system,BlinkMacSystemFont,sans-serif;
+    color:var(--ink);
+}
+
+/* faint grid, like graph paper — quiet structural texture, not decoration */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image:
+        linear-gradient(var(--canvas-edge) 1px, transparent 1px),
+        linear-gradient(90deg, var(--canvas-edge) 1px, transparent 1px);
+    background-size:48px 48px;
+    mask-image:radial-gradient(circle at 50% 40%, black, transparent 75%);
+    pointer-events:none;
+}
+
+.login-card{
+    position:relative;
+    z-index:1;
+    width:400px;
+    max-width:92vw;
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-card);
+    animation:fadeIn .5s ease;
+}
+
+.card{
+    border:none;
+    background:transparent;
+    overflow:visible;
+}
+
+.card-body{
+    padding:38px 34px 32px;
+}
+
+/* small accent mark above the heading — the one signature touch */
+.card-body::before{
+    content:"";
+    display:block;
+    width:34px;
+    height:4px;
+    border-radius:2px;
+    background:var(--accent);
+    margin-bottom:18px;
+}
+
+.card-title,
+h1,h2,h3,h4{
+    margin:0 0 6px;
+    font-weight:600;
+    font-size:1.5rem;
+    letter-spacing:-.01em;
+    color:var(--ink);
+}
+
+.text-muted,
+small{
+    color:var(--muted) !important;
+    font-size:.88rem;
+}
+
+form{
+    margin-top:22px;
+}
+
+label,
+.form-label{
+    display:block;
+    font-size:.82rem;
+    font-weight:600;
+    color:#374151;
+    margin-bottom:6px;
+}
+
+.mb-3,.mb-4,.form-group{
+    margin-bottom:18px !important;
+}
+
+.form-control,
+.form-select{
+    width:100%;
+    border:1.5px solid var(--line);
+    border-radius:var(--radius-md);
+    background:var(--white);
+    padding:11px 13px;
+    font-size:.95rem;
+    color:var(--ink);
+    transition:border-color .15s ease, box-shadow .15s ease;
+}
+
+.form-control::placeholder{
+    color:#9ca3af;
+}
+
+.form-control:focus,
+.form-select:focus{
+    outline:none;
+    border-color:var(--accent);
+    box-shadow:0 0 0 4px var(--accent-soft);
+}
+
+.input-group-text{
+    background:var(--white);
+    border:1.5px solid var(--line);
+    border-radius:var(--radius-md);
+    color:var(--muted);
+}
+
+.input-group:focus-within .input-group-text{
+    border-color:var(--accent);
+    color:var(--accent);
+}
+
+.form-check-input{
+    border-radius:4px;
+    border:1.5px solid var(--line);
+}
+
+.form-check-input:checked{
+    background-color:var(--accent);
+    border-color:var(--accent);
+}
+
+.btn-primary{
+    width:100%;
+    margin-top:8px;
+    border:none;
+    border-radius:var(--radius-md);
+    padding:12px 18px;
+    font-weight:600;
+    font-size:.95rem;
+    color:var(--white);
+    background:var(--accent);
+    box-shadow:0 1px 2px rgba(16,24,40,.05);
+    cursor:pointer;
+    transition:background .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+
+.btn-primary:hover{
+    background:var(--accent-dark);
+    box-shadow:0 8px 18px -6px rgba(52,84,209,.4);
+    transform:translateY(-1px);
+}
+
+.btn-primary:active{
+    transform:translateY(0);
+}
+
+a{
+    color:var(--accent);
+    text-decoration:none;
+    font-weight:600;
+}
+
+a:hover{
+    color:var(--accent-dark);
+    text-decoration:underline;
+}
+
+.card-body > .text-center:last-child,
+.card-body > p:last-child{
+    margin-top:20px;
+    padding-top:16px;
+    border-top:1px solid var(--line);
+    font-size:.85rem;
+    text-align:center;
+    color:var(--muted);
+}
+
+@keyframes fadeIn{
+    from{ opacity:0; transform:translateY(14px); }
+    to{ opacity:1; transform:translateY(0); }
+}
+
+@media (max-width:480px){
+    .card-body{
+        padding:30px 22px 26px;
+    }
+}

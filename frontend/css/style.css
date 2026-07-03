@@ -1,0 +1,683 @@
+/* =========================================================
+   Library Management System — Manage Books
+   Same design language as the admin dashboard: neutral
+   canvas, single accent, card-grouped sections, clean table.
+========================================================= */
+
+:root{
+    --canvas:#f4f6f9;
+    --surface:#ffffff;
+    --line:#e5e8ee;
+    --ink:#131826;
+    --muted:#667085;
+
+    --accent:#3454d1;
+    --accent-dark:#28409f;
+    --accent-soft:rgba(52,84,209,.10);
+
+    --danger:#dc2626;
+    --danger-soft:rgba(220,38,38,.08);
+    --success:#0f9d58;
+    --success-soft:rgba(15,157,88,.10);
+
+    --radius-lg:16px;
+    --radius-md:10px;
+    --shadow-sm:0 1px 2px rgba(16,24,40,.05);
+    --shadow-md:0 10px 24px -12px rgba(16,24,40,.18);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    background:var(--canvas);
+    font-family:"Segoe UI","Inter",-apple-system,BlinkMacSystemFont,sans-serif;
+    color:var(--ink);
+    padding:32px;
+}
+
+/* hide the manual <br><br> spacers — spacing is handled by layout instead */
+br{
+    display:none;
+}
+
+hr{
+    border:none;
+    height:0;
+    margin:32px 0;
+}
+
+h2{
+    margin:0 0 16px;
+    padding-bottom:10px;
+    font-size:1.05rem;
+    font-weight:700;
+    letter-spacing:-.01em;
+    color:var(--ink);
+    border-bottom:2px solid var(--accent);
+    display:inline-block;
+}
+
+/* ---------------- Add Book form ---------------- */
+
+#bookForm{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    align-items:flex-end;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-sm);
+    padding:24px;
+    margin-bottom:8px;
+}
+
+#bookForm input{
+    flex:1 1 180px;
+    border:1.5px solid var(--line);
+    border-radius:var(--radius-md);
+    padding:11px 13px;
+    font-size:.92rem;
+    color:var(--ink);
+    background:var(--surface);
+    transition:border-color .15s ease, box-shadow .15s ease;
+}
+
+#bookForm input::placeholder{
+    color:#9ca3af;
+}
+
+#bookForm input:focus{
+    outline:none;
+    border-color:var(--accent);
+    box-shadow:0 0 0 4px var(--accent-soft);
+}
+
+#bookForm input[type="number"]{
+    flex:1 1 120px;
+}
+
+#bookForm button[type="submit"]{
+    flex:0 0 auto;
+    border:none;
+    border-radius:var(--radius-md);
+    padding:11px 22px;
+    font-size:.92rem;
+    font-weight:600;
+    color:#fff;
+    background:var(--accent);
+    cursor:pointer;
+    transition:background .15s ease, transform .15s ease;
+}
+
+#bookForm button[type="submit"]:hover{
+    background:var(--accent-dark);
+    transform:translateY(-1px);
+}
+
+#bookForm button[type="submit"]:active{
+    transform:translateY(0);
+}
+
+/* ---------------- Search bar ---------------- */
+
+body > input#search{
+    display:inline-block;
+    width:340px;
+    max-width:100%;
+    border:1.5px solid var(--line);
+    border-radius:var(--radius-md);
+    padding:11px 13px;
+    font-size:.92rem;
+    color:var(--ink);
+    background:var(--surface);
+    margin-right:10px;
+    margin-bottom:12px;
+    transition:border-color .15s ease, box-shadow .15s ease;
+}
+
+body > input#search::placeholder{
+    color:#9ca3af;
+}
+
+body > input#search:focus{
+    outline:none;
+    border-color:var(--accent);
+    box-shadow:0 0 0 4px var(--accent-soft);
+}
+
+body > button[onclick="searchBook()"],
+body > button[onclick="loadBooks()"]{
+    border:1.5px solid var(--line);
+    border-radius:var(--radius-md);
+    padding:11px 20px;
+    font-size:.9rem;
+    font-weight:600;
+    cursor:pointer;
+    margin-right:8px;
+    margin-bottom:12px;
+    transition:all .15s ease;
+}
+
+body > button[onclick="searchBook()"]{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#fff;
+}
+
+body > button[onclick="searchBook()"]:hover{
+    background:var(--accent-dark);
+    border-color:var(--accent-dark);
+}
+
+body > button[onclick="loadBooks()"]{
+    background:var(--surface);
+    color:var(--ink);
+}
+
+body > button[onclick="loadBooks()"]:hover{
+    border-color:var(--accent);
+    color:var(--accent);
+    background:var(--accent-soft);
+}
+
+/* ---------------- Books table ---------------- */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+    overflow:hidden;
+    box-shadow:var(--shadow-sm);
+}
+
+thead tr{
+    background:var(--ink);
+}
+
+thead th{
+    text-align:left;
+    padding:13px 16px;
+    font-size:.76rem;
+    font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:#f4f6f9;
+}
+
+tbody td{
+    padding:13px 16px;
+    font-size:.9rem;
+    color:var(--ink);
+    border-top:1px solid var(--line);
+}
+
+tbody tr:hover{
+    background:var(--accent-soft);
+}
+
+tbody td:nth-child(1){
+    color:var(--muted);
+    font-variant-numeric:tabular-nums;
+}
+
+/* available-copies column reads as a quick status signal */
+tbody td:nth-child(6){
+    font-weight:700;
+    color:var(--success);
+}
+
+/* buttons rendered inside the Actions column by JS (edit/delete/etc.) */
+tbody td:last-child button{
+    border:1.5px solid var(--line);
+    background:var(--surface);
+    color:var(--ink);
+    font-size:.8rem;
+    font-weight:600;
+    padding:6px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-right:6px;
+    transition:all .15s ease;
+}
+
+tbody td:last-child button:hover{
+    border-color:var(--accent);
+    color:var(--accent);
+    background:var(--accent-soft);
+}
+
+tbody td:last-child button[onclick*="delete" i]{
+    border-color:var(--danger-soft);
+    color:var(--danger);
+    background:var(--danger-soft);
+}
+
+tbody td:last-child button[onclick*="delete" i]:hover{
+    background:var(--danger);
+    border-color:var(--danger);
+    color:#fff;
+}
+
+/* empty-state placeholder, if JS inserts a single "No books found" row */
+tbody tr:only-child td[colspan]{
+    text-align:center;
+    padding:30px;
+    color:var(--muted);
+    font-style:italic;
+}
+
+/* ---------------- Responsive ---------------- */
+
+@media (max-width:720px){
+    body{
+        padding:18px;
+    }
+
+    #bookForm{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    #bookForm button[type="submit"]{
+        width:100%;
+    }
+
+    body > input#search{
+        width:100%;
+        margin-right:0;
+    }
+
+    table{
+        display:block;
+        overflow-x:auto;
+        white-space:nowrap;
+    }
+}
+
+
+
+
+
+
+/* =========================================================
+   Library Management System — Manage Books
+   Same design language as the admin dashboard: neutral
+   canvas, single accent, card-grouped sections, clean table.
+========================================================= */
+
+:root{
+    --canvas:#f4f6f9;
+    --surface:#ffffff;
+    --line:#e5e8ee;
+    --ink:#131826;
+    --muted:#667085;
+
+    --accent:#3454d1;
+    --accent-dark:#28409f;
+    --accent-soft:rgba(52,84,209,.10);
+
+    --danger:#dc2626;
+    --danger-soft:rgba(220,38,38,.08);
+    --success:#0f9d58;
+    --success-soft:rgba(15,157,88,.10);
+
+    --radius-lg:16px;
+    --radius-md:10px;
+    --shadow-sm:0 1px 2px rgba(16,24,40,.05);
+    --shadow-md:0 10px 24px -12px rgba(16,24,40,.18);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    background:var(--canvas);
+    font-family:"Segoe UI","Inter",-apple-system,BlinkMacSystemFont,sans-serif;
+    color:var(--ink);
+    padding:32px;
+}
+
+/* hide the manual <br><br> spacers — spacing is handled by layout instead */
+br{
+    display:none;
+}
+
+hr{
+    border:none;
+    height:0;
+    margin:32px 0;
+}
+
+h2{
+    margin:0 0 16px;
+    padding-bottom:10px;
+    font-size:1.05rem;
+    font-weight:700;
+    letter-spacing:-.01em;
+    color:var(--ink);
+    border-bottom:2px solid var(--accent);
+    display:inline-block;
+}
+
+/* ---------------- Add Book form ---------------- */
+
+#bookForm{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    align-items:flex-end;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-sm);
+    padding:24px;
+    margin-bottom:8px;
+}
+
+#bookForm input{
+    flex:1 1 180px;
+    border:1.5px solid var(--line);
+    border-radius:var(--radius-md);
+    padding:11px 13px;
+    font-size:.92rem;
+    color:var(--ink);
+    background:var(--surface);
+    transition:border-color .15s ease, box-shadow .15s ease;
+}
+
+#bookForm input::placeholder{
+    color:#9ca3af;
+}
+
+#bookForm input:focus{
+    outline:none;
+    border-color:var(--accent);
+    box-shadow:0 0 0 4px var(--accent-soft);
+}
+
+#bookForm input[type="number"]{
+    flex:1 1 120px;
+}
+
+#bookForm button[type="submit"]{
+    flex:0 0 auto;
+    border:none;
+    border-radius:var(--radius-md);
+    padding:11px 22px;
+    font-size:.92rem;
+    font-weight:600;
+    color:#fff;
+    background:var(--accent);
+    cursor:pointer;
+    transition:background .15s ease, transform .15s ease;
+}
+
+#bookForm button[type="submit"]:hover{
+    background:var(--accent-dark);
+    transform:translateY(-1px);
+}
+
+#bookForm button[type="submit"]:active{
+    transform:translateY(0);
+}
+
+/* ---------------- Add/Edit Student form ---------------- */
+
+#studentForm{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    align-items:flex-end;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-sm);
+    padding:24px;
+    margin:16px 0 8px;
+}
+
+#studentForm input{
+    flex:1 1 180px;
+    border:1.5px solid var(--line);
+    border-radius:var(--radius-md);
+    padding:11px 13px;
+    font-size:.92rem;
+    color:var(--ink);
+    background:var(--surface);
+    transition:border-color .15s ease, box-shadow .15s ease;
+}
+
+#studentForm input::placeholder{
+    color:#9ca3af;
+}
+
+#studentForm input:focus{
+    outline:none;
+    border-color:var(--accent);
+    box-shadow:0 0 0 4px var(--accent-soft);
+}
+
+#studentForm input[type="number"]{
+    flex:1 1 100px;
+}
+
+#studentForm button[type="submit"]{
+    flex:0 0 auto;
+    border:none;
+    border-radius:var(--radius-md);
+    padding:11px 22px;
+    font-size:.92rem;
+    font-weight:600;
+    color:#fff;
+    background:var(--accent);
+    cursor:pointer;
+    transition:background .15s ease, transform .15s ease;
+}
+
+#studentForm button[type="submit"]:hover{
+    background:var(--accent-dark);
+    transform:translateY(-1px);
+}
+
+#studentForm button[type="submit"]:active{
+    transform:translateY(0);
+}
+
+/* ---------------- Search bar ---------------- */
+
+body > input#search{
+    display:inline-block;
+    width:340px;
+    max-width:100%;
+    border:1.5px solid var(--line);
+    border-radius:var(--radius-md);
+    padding:11px 13px;
+    font-size:.92rem;
+    color:var(--ink);
+    background:var(--surface);
+    margin-right:10px;
+    margin-bottom:12px;
+    transition:border-color .15s ease, box-shadow .15s ease;
+}
+
+body > input#search::placeholder{
+    color:#9ca3af;
+}
+
+body > input#search:focus{
+    outline:none;
+    border-color:var(--accent);
+    box-shadow:0 0 0 4px var(--accent-soft);
+}
+
+body > button[onclick="searchBook()"],
+body > button[onclick="searchStudent()"],
+body > button[onclick="loadBooks()"]{
+    border:1.5px solid var(--line);
+    border-radius:var(--radius-md);
+    padding:11px 20px;
+    font-size:.9rem;
+    font-weight:600;
+    cursor:pointer;
+    margin-right:8px;
+    margin-bottom:12px;
+    transition:all .15s ease;
+}
+
+body > button[onclick="searchBook()"],
+body > button[onclick="searchStudent()"]{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#fff;
+}
+
+body > button[onclick="searchBook()"]:hover,
+body > button[onclick="searchStudent()"]:hover{
+    background:var(--accent-dark);
+    border-color:var(--accent-dark);
+}
+
+body > button[onclick="loadBooks()"]{
+    background:var(--surface);
+    color:var(--ink);
+}
+
+body > button[onclick="loadBooks()"]:hover{
+    border-color:var(--accent);
+    color:var(--accent);
+    background:var(--accent-soft);
+}
+
+/* ---------------- Books table ---------------- */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+    overflow:hidden;
+    box-shadow:var(--shadow-sm);
+}
+
+thead tr{
+    background:var(--ink);
+}
+
+thead th{
+    text-align:left;
+    padding:13px 16px;
+    font-size:.76rem;
+    font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:#f4f6f9;
+}
+
+tbody td{
+    padding:13px 16px;
+    font-size:.9rem;
+    color:var(--ink);
+    border-top:1px solid var(--line);
+}
+
+tbody tr:hover{
+    background:var(--accent-soft);
+}
+
+tbody td:nth-child(1){
+    color:var(--muted);
+    font-variant-numeric:tabular-nums;
+}
+
+/* available-copies column (Books table only) reads as a quick status signal */
+#bookTable td:nth-child(6){
+    font-weight:700;
+    color:var(--success);
+}
+
+/* Year column (Students table) — quiet, not a status value like Available */
+#studentTable td:nth-child(6){
+    color:var(--muted);
+    font-variant-numeric:tabular-nums;
+}
+
+/* buttons rendered inside the Actions column by JS (edit/delete/etc.) */
+tbody td:last-child button{
+    border:1.5px solid var(--line);
+    background:var(--surface);
+    color:var(--ink);
+    font-size:.8rem;
+    font-weight:600;
+    padding:6px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-right:6px;
+    transition:all .15s ease;
+}
+
+tbody td:last-child button:hover{
+    border-color:var(--accent);
+    color:var(--accent);
+    background:var(--accent-soft);
+}
+
+tbody td:last-child button[onclick*="delete" i]{
+    border-color:var(--danger-soft);
+    color:var(--danger);
+    background:var(--danger-soft);
+}
+
+tbody td:last-child button[onclick*="delete" i]:hover{
+    background:var(--danger);
+    border-color:var(--danger);
+    color:#fff;
+}
+
+/* empty-state placeholder, if JS inserts a single "No books found" row */
+tbody tr:only-child td[colspan]{
+    text-align:center;
+    padding:30px;
+    color:var(--muted);
+    font-style:italic;
+}
+
+/* ---------------- Responsive ---------------- */
+
+@media (max-width:720px){
+    body{
+        padding:18px;
+    }
+
+    #bookForm,
+    #studentForm{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    #bookForm button[type="submit"],
+    #studentForm button[type="submit"]{
+        width:100%;
+    }
+
+    body > input#search{
+        width:100%;
+        margin-right:0;
+    }
+
+    table{
+        display:block;
+        overflow-x:auto;
+        white-space:nowrap;
+    }
+}
