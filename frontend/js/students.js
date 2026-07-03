@@ -41,19 +41,11 @@ function displayStudents(students) {
 
 <td>${student.year}</td>
 
+
 <td>
-
-<button onclick="editStudent(${student.studentId})">
-
-Edit
-
-</button>
-
-<button onclick="deleteStudent(${student.studentId})">
-
-Delete
-
-</button>
+    <button class="btn btn-edit" onclick="editStudent(id)">Edit</button>
+    <button class="btn btn-danger" onclick="deleteStudent(id)">Delete</button>
+</td>
 
 </td>
 

@@ -1,73 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-
-    <link rel="stylesheet" href="css/dashboard.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard · Library</title>
+    <!-- separate CSS: dashboard.css -->
+    <link rel="stylesheet" href="css/dashboard.css" />
 </head>
-
 <body>
 
-<h1>Library Management System</h1>
+    <!-- ===== TOP HEADER ===== -->
+    <header class="main-header">
+        <div class="header-left">
+            <span class="logo-icon">📚</span>
+            <h1>Library Management</h1>
+        </div>
+        <div class="header-right">
+            <span class="welcome-text">Welcome, <span id="adminName">Admin</span></span>
+            <button class="btn logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </header>
 
-<h2>Admin Dashboard</h2>
-<h2>Welcome, <span id="adminName"></span></h2>
+    <!-- ===== DASHBOARD GRID ===== -->
+    <div class="dashboard-grid">
 
-<div>
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="sidebar">
+            <nav class="side-nav">
+                <ul>
+                    <li class="active"><a href="#"><span class="nav-icon">📊</span> Dashboard</a></li>
+                    <li><a href="books.html"><span class="nav-icon">📖</span> Manage Books</a></li>
+                    <li><a href="students.html"><span class="nav-icon">👥</span> Students</a></li>
+                    <li><a href="#"><span class="nav-icon">🔄</span> Transactions</a></li>
+                    <li><a href="#"><span class="nav-icon">💰</span> Fines</a></li>
+                    <li><a href="#"><span class="nav-icon">⚙️</span> Settings</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <p>v2.0 · Library System</p>
+            </div>
+        </aside>
 
-    <button onclick="location.href='books.html'">
-        Manage Books
-    </button>
+        <!-- ===== MAIN CONTENT ===== -->
+        <main class="main-content">
 
-    <button onclick="location.href='students.html'">
+            <!-- stats cards (6 cards) -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue">📚</div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="totalBooks">0</span>
+                        <span class="stat-label">Total Books</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green">📗</div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="availableBooks">0</span>
+                        <span class="stat-label">Available</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange">📕</div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="borrowedBooks">0</span>
+                        <span class="stat-label">Borrowed</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon purple">📘</div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="returnedBooks">0</span>
+                        <span class="stat-label">Returned</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon teal">👥</div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="totalStudents">0</span>
+                        <span class="stat-label">Total Students</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon rose">💰</div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="totalFine">₹0</span>
+                        <span class="stat-label">Fine Collected</span>
+                    </div>
+                </div>
+            </section>
 
-View Students
+            <!-- ===== QUICK ACTION BUTTONS ===== -->
+            <div class="action-bar">
+                <button class="action-btn primary" onclick="location.href='books.html'">➕ Manage Books</button>
+                <button class="action-btn secondary" onclick="location.href='students.html'">👥 View Students</button>
+                <button class="action-btn outline" onclick="location.href='transactions.html'">🔄 Transactions</button>
+                <button class="action-btn outline" onclick="location.href='fines.html'">💰 Fines</button>
+            </div>
 
-</button>
+            <!-- ===== TWO PANELS: RECENT + QUICK ===== -->
+            <div class="content-panels">
 
-    <button onclick="logout()">
-        Logout
-    </button>
+                <!-- recent activity -->
+                <section class="panel recent-activity">
+                    <h2>📋 Recent Activity</h2>
+                    <ul class="activity-list" id="recentActivity">
+                        <li><span class="badge borrowed">Borrowed</span> “The Great Gatsby” <span class="time">2h ago</span></li>
+                        <li><span class="badge returned">Returned</span> “1984” <span class="time">4h ago</span></li>
+                        <li><span class="badge borrowed">Borrowed</span> “Dune” <span class="time">yesterday</span></li>
+                        <li><span class="badge overdue">Overdue</span> “Brave New World” <span class="time">2d ago</span></li>
+                    </ul>
+                    <a href="#" class="link-more">View all activity →</a>
+                </section>
 
-</div>
+                <!-- upcoming dues + fine summary -->
+                <section class="panel upcoming-panel">
+                    <h2>⏳ Upcoming Due Dates</h2>
+                    <ul class="due-list" id="dueList">
+                        <li><span class="book-title">The Catcher in the Rye</span> <span class="due-date">due in 2 days</span></li>
+                        <li><span class="book-title">To Kill a Mockingbird</span> <span class="due-date">due tomorrow</span></li>
+                        <li><span class="book-title">Moby-Dick</span> <span class="due-date">due in 5 days</span></li>
+                    </ul>
+                    <div class="fine-summary">
+                        <span>💰 Total pending fines: </span>
+                        <strong id="pendingFineDisplay">₹240</strong>
+                    </div>
+                </section>
+            </div>
 
-<div class="cards">
+            <!-- footer -->
+            <footer class="main-footer">
+                <p>© 2026 Library Management System · Admin Dashboard</p>
+            </footer>
 
-<div class="card">
-<h3>Total Books</h3>
-<h1 id="totalBooks">0</h1>
-</div>
+        </main>
+    </div>
 
-<div class="card">
-<h3>Available Books</h3>
-<h1 id="availableBooks">0</h1>
-</div>
-
-<div class="card">
-<h3>Borrowed Books</h3>
-<h1 id="borrowedBooks">0</h1>
-</div>
-
-<div class="card">
-<h3>Returned Books</h3>
-<h1 id="returnedBooks">0</h1>
-</div>
-
-<div class="card">
-<h3>Total Students</h3>
-<h1 id="totalStudents">0</h1>
-</div>
-
-<div class="card">
-<h3>Fine Collected</h3>
-<h1 id="totalFine">₹0</h1>
-</div>
-
-</div>
-
-<script src="js/admin.js"></script>
+    <!-- ===== JAVASCRIPT (admin.js) ===== -->
+    <script src="js/admin.js"></script>
 
 </body>
 </html>

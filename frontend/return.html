@@ -1,44 +1,93 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-
-<title>Return Books</title>
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Return Books · Student Portal</title>
+    <link rel="stylesheet" href="css/return.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
-
 <body>
 
-<h2>Borrowed Books</h2>
+    <header class="portal-header">
+        <div class="container">
+            <div class="header-content">
+                <div>
+                    <h1>🔄 Return Borrowed Books</h1>
+                    <p>View your active rentals, track remaining days, and initiate returns.</p>
+                </div>
+                <div class="user-badge">
+                    <span class="avatar">S</span>
+                    <span>Student Dashboard</span>
+                </div>
+            </div>
+        </div>
+    </header>
 
-<table border="1">
+    <main class="container main-content">
+        
+        <section class="control-panel">
+            <div class="search-box">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 20 20" fill="none">
+                    <circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="2"/>
+                    <path d="M13.5 13.5L17.5 17.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <input type="text" id="search" placeholder="Search by book title or Borrow ID..." onkeyup="filterTable()" />
+            </div>
+            
+            <div class="filter-group">
+                <select id="statusFilter" onchange="filterByStatus()">
+                    <option value="all">All Borrowed</option>
+                    <option value="overdue">Overdue Only</option>
+                    <option value="pending">Active (Normal)</option>
+                </select>
+            </div>
+        </section>
 
-<thead>
+        <div class="results-meta">
+            <span id="rentalCounter">You currently have active book rentals</span>
+        </div>
 
-<tr>
+        <section class="table-card">
+            <div class="table-wrapper">
+                <table class="books-table">
+                    <thead>
+                        <tr>
+                            <th width="120">Borrow ID</th>
+                            <th>Book Title</th>
+                            <th>Borrow Date</th>
+                            <th>Due Date</th>
+                            <th>Status / Timeline</th>
+                            <th width="120" style="text-align: right;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="borrowTable">
+                        <tr>
+                            <td><code class="id-badge">BRW-4092</code></td>
+                            <td class="font-medium">Clean Code: A Handbook of Agile Software Craftsmanship</td>
+                            <td>Oct 12, 2026</td>
+                            <td>Nov 12, 2026</td>
+                            <td><span class="status-badge available">14 Days Left</span></td>
+                            <td style="text-align: right;">
+                                <button class="btn-action" onclick="returnBook('BRW-4092')">Return</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code class="id-badge">BRW-3811</code></td>
+                            <td class="font-medium">Introduction to the Theory of Computation</td>
+                            <td>Sep 01, 2026</td>
+                            <td>Oct 01, 2026</td>
+                            <td><span class="status-badge unavailable">⚠️ Overdue by 25 Days</span></td>
+                            <td style="text-align: right;">
+                                <button class="btn-action danger" onclick="returnBook('BRW-3811')">Return Now</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
 
-<th>Borrow ID</th>
-
-<th>Book</th>
-
-<th>Borrow Date</th>
-
-<th>Due Date</th>
-
-<th>Action</th>
-
-</tr>
-
-</thead>
-
-<tbody id="borrowTable">
-
-</tbody>
-
-</table>
-
-<script src="js/return.js"></script>
-
+    <script src="js/return.js"></script>
 </body>
-
 </html>

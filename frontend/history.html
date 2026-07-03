@@ -1,46 +1,109 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-
-<title>Borrow History</title>
-
-<link rel="stylesheet" href="css/style.css">
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Borrow History · Student Portal</title>
+    <!-- Links to shared design stylesheet layout -->
+    <link rel="stylesheet" href="css/history.css" />
+    <!-- Google Fonts for professional web typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
-
 <body>
 
-<h2>Borrow History</h2>
+    <!-- ===== PORTAL HEADER ===== -->
+    <header class="portal-header">
+        <div class="container">
+            <div class="header-content">
+                <div>
+                    <h1>📜 Borrowing History</h1>
+                    <p>Track your lifetime checkout records, return statuses, and outstanding balances.</p>
+                </div>
+                <div class="user-badge">
+                    <span class="avatar">S</span>
+                    <span>Student Dashboard</span>
+                </div>
+            </div>
+        </div>
+    </header>
 
-<table border="1">
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="container main-content">
+        
+        <!-- Summary Dashboard Widgets Grid -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-title">Total Checked Out</span>
+                <span class="stat-value" id="statTotal">24 Books</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-title">Active Loans</span>
+                <span class="stat-value text-primary" id="statActive">2 Books</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-title">Accrued Fines</span>
+                <span class="stat-value text-danger" id="statFines">$0.00</span>
+            </div>
+        </section>
 
-<thead>
+        <!-- Search & Advanced Filter Tools Panel -->
+        <section class="control-panel">
+            <div class="search-box">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 20 20" fill="none">
+                    <circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="2"/>
+                    <path d="M13.5 13.5L17.5 17.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <input type="text" id="search" placeholder="Filter logs by title or author keywords..." onkeyup="filterHistory()" />
+            </div>
+            <div class="filter-group">
+                <select id="historyFilter" onchange="filterByHistoryStatus()">
+                    <option value="all">All Records</option>
+                    <option value="returned">Returned</option>
+                    <option value="active">Active Loan</option>
+                    <option value="overdue">Overdue</option>
+                </select>
+            </div>
+        </section>
 
-<tr>
+        <!-- Log Card Wrapper -->
+        <section class="table-card">
+            <div class="table-wrapper">
+                <table class="books-table">
+                    <thead>
+                        <tr>
+                            <th>Book Title</th>
+                            <th>Borrow Date</th>
+                            <th>Due Date</th>
+                            <th>Return Date</th>
+                            <th width="140">Status</th>
+                            <th width="120" style="text-align: right;">Fine</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTable">
+                        <!-- Mock Dynamic Record 1: Successfully Handled -->
+                        <tr>
+                            <td class="font-medium">Design Patterns: Elements of Reusable Object-Oriented Software</td>
+                            <td>Mar 04, 2026</td>
+                            <td>Apr 04, 2026</td>
+                            <td>Apr 02, 2026</td>
+                            <td><span class="status-badge status-returned">Returned</span></td>
+                            <td class="fine-value safe" style="text-align: right;">—</td>
+                        </tr>
+                        <!-- Mock Dynamic Record 2: Active Overdue Item -->
+                        <tr>
+                            <td class="font-medium">Artificial Intelligence: A Modern Approach (4th Edition)</td>
+                            <td>May 10, 2026</td>
+                            <td>Jun 10, 2026</td>
+                            <td class="text-muted italic">Not Returned Yet</td>
+                            <td><span class="status-badge status-overdue">Overdue</span></td>
+                            <td class="fine-value charged" style="text-align: right;">$15.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
 
-<th>Book</th>
-
-<th>Borrow Date</th>
-
-<th>Due Date</th>
-
-<th>Return Date</th>
-
-<th>Status</th>
-
-<th>Fine</th>
-
-</tr>
-
-</thead>
-
-<tbody id="historyTable">
-
-</tbody>
-
-</table>
-
-<script src="js/history.js"></script>
-
+    <script src="js/history.js"></script>
 </body>
 </html>

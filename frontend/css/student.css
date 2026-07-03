@@ -1,0 +1,248 @@
+/* ==========================================================================
+   1. Design Variables & Base Reset
+   ========================================================================== */
+:root {
+    --bg-app: #f8fafc;
+    --bg-card: #ffffff;
+    --text-dark: #0f172a;
+    --text-gray: #475569;
+    --text-light: #94a3b8;
+    
+    /* Brand & Action Colors */
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    --success: #10b981;
+    --success-hover: #059669;
+    --danger: #ef4444;
+    --danger-hover: #dc2626;
+    
+    --border: #e2e8f0;
+    --radius: 8px;
+    --radius-sm: 4px;
+    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-app);
+    color: var(--text-dark);
+    line-height: 1.5;
+    padding: 2.5rem 1.5rem;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: var(--text-dark);
+}
+
+/* ==========================================================================
+   2. Top Section (Search & Form Card)
+   ========================================================================== */
+.top-section {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+    border: 1px solid var(--border);
+}
+
+/* Horizontal Search Utility */
+.search-container {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 450px;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px dashed var(--border);
+}
+
+/* Flexbox Form Wrapper - Align inputs side-by-side gracefully */
+#studentForm {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: flex-end; /* Keeps inputs and button baseline aligned */
+}
+
+.form-group {
+    flex: 1;
+    min-width: 160px; /* Prevents inputs from getting too squished */
+}
+
+/* Make password and email a bit wider if screen permits */
+.form-group:has(#email), 
+.form-group:has(#password) {
+    flex: 1.2;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-gray);
+    margin-bottom: 0.4rem;
+}
+
+/* Shared Input Component styles */
+input {
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+    font-family: inherit;
+    color: var(--text-dark);
+    background-color: #fff;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* ==========================================================================
+   3. Unified Buttons & Action States
+   ========================================================================== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.55rem 1.2rem;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    white-space: nowrap;
+}
+
+.btn-search {
+    background-color: #475569;
+    color: white;
+}
+
+.btn-search:hover {
+    background-color: #334155;
+}
+
+.btn-submit {
+    background-color: var(--primary);
+    color: white;
+    height: calc(2.1rem + 2px); /* Matches exact height of inputs with labels */
+    padding: 0 1.5rem;
+}
+
+.btn-submit:hover {
+    background-color: var(--primary-hover);
+}
+
+/* Inline Action Buttons inside Table */
+.action-buttons {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.btn-edit {
+    background-color: var(--success);
+    color: white;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+    border-radius: var(--radius-sm);
+}
+
+.btn-edit:hover {
+    background-color: var(--success-hover);
+}
+
+.btn-danger {
+    background-color: var(--danger);
+    color: white;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+    border-radius: var(--radius-sm);
+}
+
+.btn-danger:hover {
+    background-color: var(--danger-hover);
+}
+
+/* ==========================================================================
+   4. Directory Table Layout
+   ========================================================================== */
+.table-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+}
+
+.table-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+th {
+    background-color: #f1f5f9;
+    color: var(--text-gray);
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    border-bottom: 2px solid var(--border);
+}
+
+td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dark);
+    vertical-align: middle;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background-color: #f8fafc;
+}
+
+/* Responsive adjustment for tight mobile viewport */
+@media (max-width: 768px) {
+    #studentForm {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .btn-submit {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+}

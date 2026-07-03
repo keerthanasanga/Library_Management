@@ -1,40 +1,309 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-
-<title>Student Profile</title>
-
-<link rel="stylesheet" href="css/style.css">
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Profile · Library</title>
+    <link rel="stylesheet" href="css/profile.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
 </head>
-
 <body>
 
-<h2>Student Profile</h2>
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-brand">
+                <div class="brand-logo">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <rect width="40" height="40" rx="10" fill="#2563eb"/>
+                        <path d="M13 28V16L20 21L27 16V28L20 33L13 28Z" fill="white" opacity="0.95"/>
+                        <path d="M20 21L27 16L20 11L13 16L20 21Z" fill="white" opacity="0.5"/>
+                        <circle cx="20" cy="20" r="4" fill="#2563eb"/>
+                    </svg>
+                </div>
+                <span class="brand-name">Lib<span>Flow</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="student-dashboard.html">Dashboard</a>
+                <a href="student-books.html">Books</a>
+                <a href="borrow.html">Borrow</a>
+                <a href="profile.html" class="active">Profile</a>
+                <a href="login.html" class="btn-login-nav" onclick="logout()">Logout</a>
+            </div>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
 
-<form id="profileForm">
+    <!-- ===== PROFILE SECTION ===== -->
+    <section class="profile-section">
+        <div class="container">
+            <div class="profile-grid">
+                <!-- Profile Sidebar -->
+                <div class="profile-sidebar">
+                    <div class="profile-avatar">
+                        <div class="avatar-circle">
+                            <span id="avatarInitial">S</span>
+                        </div>
+                        <h3 id="profileName">Student Name</h3>
+                        <p id="profileEmail">student@example.com</p>
+                        <div class="profile-badge">
+                            <span class="badge-active">● Active Member</span>
+                        </div>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="profile-stat">
+                            <span class="stat-number" id="booksBorrowed">0</span>
+                            <span class="stat-label">Books Borrowed</span>
+                        </div>
+                        <div class="profile-stat">
+                            <span class="stat-number" id="booksReturned">0</span>
+                            <span class="stat-label">Books Returned</span>
+                        </div>
+                        <div class="profile-stat">
+                            <span class="stat-number" id="pendingFines">₹0</span>
+                            <span class="stat-label">Pending Fines</span>
+                        </div>
+                    </div>
+                </div>
 
-<input type="text" id="name" placeholder="Name"><br><br>
+                <!-- Profile Form -->
+                <div class="profile-main">
+                    <div class="profile-header">
+                        <h2>Edit Profile</h2>
+                        <p>Update your personal information</p>
+                    </div>
 
-<input type="email" id="email" placeholder="Email"><br><br>
+                    <form id="profileForm" class="profile-form">
+                        <div class="form-group">
+                            <label for="studentId">Student ID</label>
+                            <input type="text" id="studentId" placeholder="e.g., STU-2024-001" readonly />
+                        </div>
 
-<input type="text" id="phone" placeholder="Phone"><br><br>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" placeholder="Enter your full name" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" placeholder="Enter your email" required />
+                            </div>
+                        </div>
 
-<input type="text" id="department" placeholder="Department"><br><br>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" placeholder="Enter your phone number" />
+                            </div>
+                            <div class="form-group">
+                                <label for="department">Department</label>
+                                <select id="department">
+                                    <option value="">Select Department</option>
+                                    <option value="Computer Science">Computer Science</option>
+                                    <option value="Information Technology">Information Technology</option>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Mechanical">Mechanical</option>
+                                    <option value="Civil">Civil</option>
+                                    <option value="Business Administration">Business Administration</option>
+                                </select>
+                            </div>
+                        </div>
 
-<input type="number" id="year" placeholder="Year"><br><br>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="year">Year of Study</label>
+                                <select id="year">
+                                    <option value="">Select Year</option>
+                                    <option value="1">1st Year</option>
+                                    <option value="2">2nd Year</option>
+                                    <option value="3">3rd Year</option>
+                                    <option value="4">4th Year</option>
+                                    <option value="5">5th Year</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="membershipDate">Membership Date</label>
+                                <input type="text" id="membershipDate" placeholder="Joined: Jan 2024" readonly />
+                            </div>
+                        </div>
 
-<button type="submit">
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" id="address" placeholder="Enter your address" />
+                        </div>
 
-Update Profile
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M4.1665 10H15.8332" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M11.6665 5L15.8332 10L11.6665 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Update Profile
+                            </button>
+                            <button type="reset" class="btn-secondary">Reset</button>
+                        </div>
+                    </form>
 
-</button>
+                    <!-- Recent Activity -->
+                    <div class="recent-activity">
+                        <h3>📋 Recent Activity</h3>
+                        <ul class="activity-list">
+                            <li>
+                                <span class="activity-icon">📖</span>
+                                <div>
+                                    <strong>Borrowed</strong> "The Great Gatsby"
+                                    <span class="activity-time">2 hours ago</span>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="activity-icon">📤</span>
+                                <div>
+                                    <strong>Returned</strong> "1984"
+                                    <span class="activity-time">1 day ago</span>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="activity-icon">📖</span>
+                                <div>
+                                    <strong>Borrowed</strong> "Dune"
+                                    <span class="activity-time">3 days ago</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-</form>
+    <!-- ===== FOOTER ===== -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="brand-logo">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                            <rect width="40" height="40" rx="10" fill="#2563eb"/>
+                            <path d="M13 28V16L20 21L27 16V28L20 33L13 28Z" fill="white" opacity="0.95"/>
+                            <path d="M20 21L27 16L20 11L13 16L20 21Z" fill="white" opacity="0.5"/>
+                            <circle cx="20" cy="20" r="4" fill="#2563eb"/>
+                        </svg>
+                    </div>
+                    <span class="brand-name">Lib<span>Flow</span></span>
+                    <p>Student Profile · Library Management System</p>
+                </div>
+                <div class="footer-links-group">
+                    <h4>Quick Links</h4>
+                    <a href="student-dashboard.html">Dashboard</a>
+                    <a href="student-books.html">Available Books</a>
+                    <a href="borrow.html">Borrow Books</a>
+                    <a href="history.html">Borrow History</a>
+                </div>
+                <div class="footer-links-group">
+                    <h4>Support</h4>
+                    <a href="#">Help Center</a>
+                    <a href="#">Contact Librarian</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 LibFlow. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
-<script src="js/profile.js"></script>
+    <script src="js/profile.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-toggle')?.addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 20) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Logout function
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Load profile data from localStorage (simulated)
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedData = localStorage.getItem('studentProfile');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                document.getElementById('name').value = data.name || '';
+                document.getElementById('email').value = data.email || '';
+                document.getElementById('phone').value = data.phone || '';
+                document.getElementById('department').value = data.department || '';
+                document.getElementById('year').value = data.year || '';
+                document.getElementById('address').value = data.address || '';
+                document.getElementById('studentId').value = data.studentId || 'STU-2024-001';
+                document.getElementById('membershipDate').value = data.membershipDate || 'Joined: Jan 2024';
+                
+                // Update avatar and profile info
+                const name = data.name || 'Student';
+                document.getElementById('profileName').textContent = name;
+                document.getElementById('avatarInitial').textContent = name.charAt(0).toUpperCase();
+                document.getElementById('profileEmail').textContent = data.email || 'student@example.com';
+            } else {
+                // Set default values
+                document.getElementById('studentId').value = 'STU-2024-001';
+                document.getElementById('membershipDate').value = 'Joined: Jan 2024';
+                document.getElementById('avatarInitial').textContent = 'S';
+                document.getElementById('profileName').textContent = 'Student Name';
+                document.getElementById('profileEmail').textContent = 'student@example.com';
+            }
+
+            // Load stats from localStorage
+            const stats = JSON.parse(localStorage.getItem('studentStats')) || {
+                booksBorrowed: 5,
+                booksReturned: 3,
+                pendingFines: 45
+            };
+            document.getElementById('booksBorrowed').textContent = stats.booksBorrowed;
+            document.getElementById('booksReturned').textContent = stats.booksReturned;
+            document.getElementById('pendingFines').textContent = '₹' + stats.pendingFines;
+        });
+
+        // Form submission
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                department: document.getElementById('department').value,
+                year: document.getElementById('year').value,
+                address: document.getElementById('address').value,
+                studentId: document.getElementById('studentId').value,
+                membershipDate: document.getElementById('membershipDate').value
+            };
+
+            localStorage.setItem('studentProfile', JSON.stringify(formData));
+            
+            // Update avatar
+            document.getElementById('profileName').textContent = formData.name;
+            document.getElementById('avatarInitial').textContent = formData.name.charAt(0).toUpperCase();
+            document.getElementById('profileEmail').textContent = formData.email;
+
+            alert('✅ Profile updated successfully!');
+        });
+    </script>
 
 </body>
-
 </html>

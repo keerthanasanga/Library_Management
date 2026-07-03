@@ -1,62 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Student Dashboard</title>
-<h2>Welcome, <span id="studentName"></span></h2>
-
-<link rel="stylesheet" href="css/dashboard.css">
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Dashboard · Library</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/dashboard.css" />
 </head>
-
 <body>
 
-<h1>Library Management System</h1>
+    <header class="main-header">
+        <div class="header-left">
+            <span class="logo-icon">📚</span>
+            <h1>Library Management</h1>
+        </div>
+        <div class="header-right">
+            <span class="welcome-text">Welcome, <span id="studentNameHeader">Student</span></span>
+            <button class="btn logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </header>
 
-<h2>Student Dashboard</h2>
+    <div class="dashboard-grid">
 
-<div class="menu">
+        <aside class="sidebar">
+            <nav class="side-nav">
+                <ul>
+                    <li class="active">
+                        <a href="#">
+                            <span class="nav-icon">📊</span> 
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="profile.html">
+                            <span class="nav-icon">👤</span> 
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="student-books.html">
+                            <span class="nav-icon">📖</span> 
+                            <span>Available Books</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="borrow.html">
+                            <span class="nav-icon">📥</span> 
+                            <span>Borrowed Books</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="return.html">
+                            <span class="nav-icon">📤</span> 
+                            <span>Return Book</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="history.html">
+                            <span class="nav-icon">📜</span> 
+                            <span>Borrow History</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <p>v2.0 · Student Portal</p>
+            </div>
+        </aside>
 
-<button onclick="location.href='profile.html'">
+        <main class="main-content">
 
-Profile
+            <div class="welcome-banner">
+                <div class="banner-text">
+                    <h2>📚 Welcome back, <span id="studentNameBanner">Student</span>!</h2>
+                    <p>Here's your library activity summary at a glance.</p>
+                </div>
+                <div class="member-badge">
+                    <span>🎓 Active Member</span>
+                </div>
+            </div>
 
-</button>
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue">📖</div>
+                    <div class="stat-info">
+                        <span class="value" id="booksBorrowed">0</span>
+                        <span class="label">Books Borrowed</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green">📗</div>
+                    <div class="stat-info">
+                        <span class="value" id="booksReturned">0</span>
+                        <span class="label">Books Returned</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange">⏳</div>
+                    <div class="stat-info">
+                        <span class="value" id="pendingReturns">0</span>
+                        <span class="label">Pending Returns</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon rose">💰</div>
+                    <div class="stat-info">
+                        <span class="value" id="studentFine">₹0</span>
+                        <span class="label">Total Fine</span>
+                    </div>
+                </div>
+            </section>
 
-<button onclick="location.href='student-books.html'">
+            <div class="action-bar">
+                <button class="action-btn primary" onclick="location.href='student-books.html'">🔍 Browse Books</button>
+                <button class="action-btn secondary" onclick="location.href='borrow.html'">📥 Borrow</button>
+                <button class="action-btn outline" onclick="location.href='return.html'">📤 Return</button>
+                <button class="action-btn outline" onclick="location.href='history.html'">📜 History</button>
+            </div>
 
-Available Books
+            <div class="content-panels">
 
-</button>
+                <section class="panel borrowed-panel">
+                    <h2>📘 Currently Borrowed</h2>
+                    <ul class="borrowed-list" id="currentBorrowed">
+                        <li>
+                            <span class="book-title">The Great Gatsby</span>
+                            <span class="due-badge due-soon">Due in 2 days</span>
+                        </li>
+                        <li>
+                            <span class="book-title">1984</span>
+                            <span class="due-badge due-ok">Due in 7 days</span>
+                        </li>
+                        <li>
+                            <span class="book-title">Dune</span>
+                            <span class="due-badge overdue-badge">⚠️ Overdue</span>
+                        </li>
+                    </ul>
+                    <a href="borrow.html" class="link-more">View all borrowed items →</a>
+                </section>
 
-<button onclick="location.href='borrow.html'">
+                <section class="panel recommended-panel">
+                    <h2>📌 Quick Navigation Matrix</h2>
+                    <div class="quick-action-grid">
+                        <div class="quick-item" onclick="location.href='student-books.html'">
+                            <span class="quick-icon">🔍</span>
+                            <span>Search Books</span>
+                        </div>
+                        <div class="quick-item" onclick="location.href='profile.html'">
+                            <span class="quick-icon">👤</span>
+                            <span>My Profile</span>
+                        </div>
+                        <div class="quick-item" onclick="location.href='history.html'">
+                            <span class="quick-icon">📜</span>
+                            <span>History Log</span>
+                        </div>
+                        <div class="quick-item" onclick="location.href='return.html'">
+                            <span class="quick-icon">📤</span>
+                            <span>Return Window</span>
+                        </div>
+                    </div>
 
-Borrowed Books
+                    <div class="notice-box">
+                        <span class="notice-icon">📢</span>
+                        <p>Return books on schedule to prevent compounding daily balance fines. <a href="return.html">Return items now</a></p>
+                    </div>
+                </section>
+            </div>
 
-</button>
+            <footer class="main-footer">
+                <p>© 2026 Library Management System · Student Dashboard Portal</p>
+            </footer>
 
-<button onclick="location.href='return.html'">
+        </main>
+    </div>
 
-Return Book
-
-</button>
-
-<button onclick="logout()">
-
-Logout
-
-</button>
-<button onclick="location.href='history.html'">
-Borrow History
-</button>
-
-</div>
-
-<script src="js/student.js"></script>
+    <script src="js/student.js"></script>
 
 </body>
 </html>

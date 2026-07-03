@@ -1,24 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-
-<title>Borrow Book</title>
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Confirm Borrow · LibFlow</title>
+    <link rel="stylesheet" href="css/borrow.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
-
 <body>
 
-<h2>Borrow Book</h2>
+    <header class="portal-header">
+        <div class="container">
+            <div class="header-content">
+                <div>
+                    <h1>⚡ Checkout Confirmation</h1>
+                    <p>Review the transaction details below to verify your library checkout.</p>
+                </div>
+                <div class="user-badge">
+                    <span class="avatar">S</span>
+                    <span>Student Dashboard</span>
+                </div>
+            </div>
+        </div>
+    </header>
 
-<p id="bookId"></p>
+    <main class="container confirmation-layout">
+        
+        <div class="confirmation-card">
+            <div class="card-icon-wrapper">
+                <span class="card-icon">📖</span>
+            </div>
+            
+            <h2>You are borrowing:</h2>
+            
+            <div class="summary-panel">
+                <div class="summary-row">
+                    <span class="summary-label">Book Reference ID:</span>
+                    <span id="bookId" class="id-badge font-mono">Loading ID...</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Standard Loan Period:</span>
+                    <span class="summary-value font-medium">30 Days</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Return Deadline:</span>
+                    <span id="expectedReturnDate" class="summary-value font-medium text-primary">Calculated at checkout</span>
+                </div>
+            </div>
 
-<button onclick="borrowBook()">
+            <div class="notice-box">
+                <h4>⚠️ Library Borrowing Rules</h4>
+                <ul>
+                    <li>Renewals can be requested online prior to the expiration date.</li>
+                    <li>Overdue books incur a penalty suspension tier matching standard rules.</li>
+                </ul>
+            </div>
 
-Confirm Borrow
+            <div class="confirmation-actions">
+                <button onclick="borrowBook()" class="btn-action btn-full">
+                    Confirm Check Out
+                </button>
+                <a href="available-books.html" class="btn-cancel">Cancel & Go Back</a>
+            </div>
+        </div>
 
-</button>
+    </main>
 
-<script src="js/borrow.js"></script>
-
+    <script src="js/borrow.js"></script>
+    <script>
+        // Inline utility helper to display local expected return windows dynamically 
+        document.addEventListener("DOMContentLoaded", function() {
+            const dateSpan = document.getElementById("expectedReturnDate");
+            if(dateSpan) {
+                const targetDate = new Date();
+                targetDate.setDate(targetDate.getDate() + 30);
+                const standardOptions = { month: 'short', day: 'numeric', year: 'numeric' };
+                dateSpan.textContent = targetDate.toLocaleDateString("en-US", standardOptions);
+            }
+        });
+    </script>
 </body>
 </html>
